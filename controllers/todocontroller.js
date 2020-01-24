@@ -18,6 +18,15 @@ var todoSchema = new mongoose.Schema({
 
 var Todo = mongoose.model('Todo',todoSchema);
 
+var logSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    pwd: String
+
+});
+
+var log = mongoose.model('log',logSchema);
+
 // var item = Todo({ item: 'hi,good morning' }).save( (err) => {
 //     if (err) {
 //         throw err
@@ -45,6 +54,21 @@ app.get('/todo',(req,res) => {
     });
     
 
+});
+
+app.get('/login',(req,res) => {    
+    res.render('login')
+});
+
+app.post('/login',(req,res) =>{
+    var login = log(req.body).save((err,data) => {
+        if(err){
+            throw err;
+        }
+        else{
+            res.json(data);
+        }
+    });
 });
 
 app.post('/todo',urlencodedParser, (req,res) => {
